@@ -128,3 +128,5 @@ WHERE c.contype = 'f'
   AND t3.nspname = ANY (current_schemas(false))
 ORDER BY c.conname
 [0m
+  [1m[35m (401.7ms)[0m  [1m[35mCREATE DATABASE "yelp_clone_development" ENCODING = 'unicode'[0m
+  [1m[35m (247.9ms)[0m  [1m[35mCREATE DATABASE "yelp_clone_test" ENCODING = 'unicode'[0m
