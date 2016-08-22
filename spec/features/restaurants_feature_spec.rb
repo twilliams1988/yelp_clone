@@ -2,6 +2,14 @@ require 'rails_helper'
 
 feature 'restaurants' do
 
+  context 'no restaurants should have been added' do
+    scenario 'should display a promt to add a restaurant' do
+      visit '/restaurants'
+      expect(page).to have_content 'No restaurants yet'
+      expect(page).to have_link 'Add a restaurant'
+    end
+  end
+
   context 'restaurants have been added' do
     before do
       Restaurant.create(name: 'KFC')
@@ -50,15 +58,15 @@ feature 'restaurants' do
     end
   end
 
+  context 'deleting restaurants' do
+    before { Restaurant.create name: 'KFC', description: 'dirty chicken' }
 
-
-
-
-  context 'no restaurants should have been added' do
-    scenario 'should display a promt to add a restaurant' do
+    scenario 'removes a restaurant when user clicks a delete link' do
       visit '/restaurants'
-      expect(page).to have_content 'No restaurants yet'
-      expect(page).to have_link 'Add a restaurant'
+      click_link 'Delete KFC'
+      expect(page).not_to have_content 'KFC'
+      expect(page).to have_content 'Restaurant deleted successfully'
     end
   end
+
 end
