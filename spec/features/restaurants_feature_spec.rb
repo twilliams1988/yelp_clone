@@ -44,3 +44,18 @@ end
       expect(current_path).to eq "/restaurants/#{kfc.id}"
     end
   end
+
+  context 'editing restaurants' do
+    before { Restaurant.create name: 'KFC', description: 'Fatty chicken' }
+
+    scenario 'let a user edit a restaurant' do
+      visit '/restaurants'
+      click_link 'Edit KFC'
+      fill_in 'Name', with: 'KFS'
+      fill_in 'Description', with: 'Yummy chicken'
+      click_button 'Update Restaurant'
+      expect(page).to have_content 'KFS'
+      expect(page).to have_content 'Yummy chicken'
+      expect(current_path).to eq '/restaurants'
+    end
+  end
