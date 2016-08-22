@@ -19,6 +19,7 @@ feature 'restaurants' do
       visit '/restaurants'
       click_link 'Add a restaurant'
       fill_in 'Name', with: 'KFC'
+      fill_in 'Description', with: 'filthy chicken'
       click_button 'Create Restaurant'
       expect(page).to have_content 'KFC'
       expect(current_path).to eq '/restaurants'
@@ -35,6 +36,23 @@ feature 'restaurants' do
       expect(current_path).to eq "/restaurants/#{kfc.id}"
     end
   end
+
+  context 'editing restaurants' do
+    before {Restaurant.create name: 'KFC', description: 'filthy chicken'}
+
+    scenario 'let a user edit a restaurant' do
+      visit '/restaurants'
+      click_link 'Edit KFC'
+      fill_in 'Name', with: 'Kentucky Fried Chicken'
+      click_button 'Update Restaurant'
+      expect(page).to have_content 'Kentucky Fried Chicken'
+      expect(current_path).to eq '/restaurants'
+    end
+  end
+
+
+
+
 
   context 'no restaurants should have been added' do
     scenario 'should display a promt to add a restaurant' do
