@@ -8,10 +8,12 @@ class RestaurantsController < ApplicationController
   end
 
   def create
-    @restaurant = Restaurant.create(restaurant_params)
-    flash[:notice] = "#{@restaurant.name} created successfully"
-
-    redirect_to "/restaurants"
+    @restaurant = Restaurant.new(restaurant_params)
+    if @restaurant.save
+      redirect_to restaurants_path
+    else
+      render "new"
+    end
   end
 
   def show
@@ -20,7 +22,6 @@ class RestaurantsController < ApplicationController
 
   def edit
     @restaurant = Restaurant.find(params[:id])
-    flash[:notice] = "#{@restaurant.name} edited successfully"
   end
 
   def update

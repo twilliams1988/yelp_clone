@@ -43,7 +43,7 @@ feature "restaurants" do
     end
   end
 
-  context "editin restaurants" do
+  context "editing restaurants" do
     let!(:kfc) { Restaurant.create(name: "KFC", description: "Deep fried goodness") }
 
     scenario "lets a user edit a restaurant" do
@@ -69,6 +69,17 @@ feature "restaurants" do
       click_link "Delete KFC"
       expect(page).not_to have_content "KFC"
       expect(page).to have_content "Restaurant deleted successfully"
+    end
+  end
+
+  context "entering invalid restaurant name" do
+    it "does not let you enter a name that is too short" do
+      visit "/restaurants"
+      click_link "Add a restaurant"
+      fill_in "Name", with: "kf"
+      click_button "Create Restaurant"
+      expect(page).not_to have_css "h3", text: "kf"
+      expect(page).to have_content "error"
     end
   end
 end
