@@ -29,9 +29,14 @@ gem 'jbuilder', '~> 2.5'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
+
+# HAML templating engine
 gem 'haml'
 
+# Devise used for login and authentication
 gem 'devise'
+# Devise related gems
+gem 'omniauth-facebook'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
