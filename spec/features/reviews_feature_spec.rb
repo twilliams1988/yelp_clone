@@ -6,6 +6,11 @@ feature "reviewing" do
     Restaurant.create name: "KFC"
   end
 
+  scenario "can see review a restaurant" do
+    visit "/restaurants"
+    expect(page).to have_link "Review KFC"
+  end
+
   scenario "allows users to enter a restaurant review" do
     visit "/restaurants"
     click_link "Review KFC"
