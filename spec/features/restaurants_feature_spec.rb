@@ -46,6 +46,13 @@ feature "restaurants" do
       sign_up
     end
 
+    context "creating restaurants" do
+      scenario "can see link to add a new restaurant" do
+        visit "/restaurants"
+        expect(page).to have_link "Add a restaurant"
+      end
+    end
+
     context "restaurants have been added" do
       before do
         Restaurant.create(name: "KFC")
