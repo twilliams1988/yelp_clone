@@ -1,5 +1,17 @@
 require 'rails_helper'
 
+context 'User is logged in' do
+  let!(:user) do
+    User.create(email: 'test@test.com', password: '123456', password_confirmation: '123456')
+  end
+
+  before do
+  visit '/users/sign_in'
+  fill_in 'Email', with: 'test@test.com'
+  fill_in 'Password', with: '123456'
+  click_button 'Log in'
+  end
+
 feature 'restaurants' do
   context 'no restaurants should have been added' do
     scenario 'should display a prompt to add a restaurant' do
@@ -42,11 +54,9 @@ end
         expect(page).to have_content 'error'
       end
     end
-
   end
 
   context 'viewing restaurants' do
-
     let!(:kfc){ Restaurant.create(name: 'KFC') }
 
     scenario 'lets a user view a restaurant' do
@@ -63,17 +73,16 @@ end
     scenario 'let a user edit a restaurant' do
       visit '/restaurants'
       click_link 'Edit KFC'
-      fill_in 'Name', with: 'KFS'
+      fill_in 'Name', with: 'KFC'
       fill_in 'Description', with: 'Yummy chicken'
       click_button 'Update Restaurant'
-      expect(page).to have_content 'KFS'
+      expect(page).to have_content 'KFC'
       expect(page).to have_content 'Yummy chicken'
       expect(current_path).to eq '/restaurants'
     end
   end
 
   context 'deleting restaurants' do
-
     before { Restaurant.create name: 'KFC', description: 'Fatty chicken' }
 
     scenario 'removes a restaurant when a user clicks a delete link' do
@@ -83,4 +92,15 @@ end
       expect(page).to have_content 'Restaurant deleted successfully'
     end
 
+  end
+
+
+end
+
+  context 'user is not logged in' do
+    scenario 'user tries to create a new restaurant' do
+      visit '/restaurants'
+      click_link 'Add a restaurant'
+      expect(page).to have_content 'Log in'
+    end
   end
