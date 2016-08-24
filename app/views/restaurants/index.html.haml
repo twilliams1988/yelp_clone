@@ -5,10 +5,12 @@
       = review.thoughts
       %br
       %br
-    - if user_signed_in?
-      = link_to "Edit #{restaurant.name}", edit_restaurant_path(restaurant)
-      = link_to "Delete #{restaurant.name}", restaurant_path(restaurant), method: :delete
+    - if (user_signed_in?)
       = link_to "Review #{restaurant.name}", new_restaurant_review_path(restaurant)
+      - if (restaurant.user_id == current_user.id)
+        = link_to "Edit #{restaurant.name}", edit_restaurant_path(restaurant)
+        = link_to "Delete #{restaurant.name}", restaurant_path(restaurant), method: :delete
+
 - else
   %h1 No restaurants yet
 
