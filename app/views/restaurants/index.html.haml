@@ -5,12 +5,14 @@
       = review.thoughts
       %br
       %br
-    = link_to "Edit #{restaurant.name}", edit_restaurant_path(restaurant)
-    = link_to "Delete #{restaurant.name}", restaurant_path(restaurant), method: :delete
-    = link_to "Review #{restaurant.name}", new_restaurant_review_path(restaurant)
+    - if user_signed_in?
+      = link_to "Edit #{restaurant.name}", edit_restaurant_path(restaurant)
+      = link_to "Delete #{restaurant.name}", restaurant_path(restaurant), method: :delete
+      = link_to "Review #{restaurant.name}", new_restaurant_review_path(restaurant)
 - else
   %h1 No restaurants yet
 
 %br
 %br
-%a(href="restaurants/new") Add a restaurant
+- if user_signed_in?
+  %a(href="restaurants/new") Add a restaurant

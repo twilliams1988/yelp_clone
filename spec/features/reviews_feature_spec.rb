@@ -2,6 +2,7 @@ require "rails_helper"
 
 feature "reviewing" do
   before do
+    sign_up
     Restaurant.create name: "KFC"
   end
 
