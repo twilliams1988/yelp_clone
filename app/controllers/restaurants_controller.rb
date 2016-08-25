@@ -30,7 +30,7 @@ class RestaurantsController < ApplicationController
 
   def update
     @restaurant = Restaurant.find(params[:id])
-    if current_user.restaurants.include? @restaurant
+    if current_user.created_restaurant?(@restaurant)
       @restaurant.update(restaurant_params)
       flash[:notice] = "Restaurant updated successfully"
       redirect_to "/restaurants"
@@ -42,7 +42,7 @@ class RestaurantsController < ApplicationController
 
   def destroy
     @restaurant = Restaurant.find(params[:id])
-    if current_user.restaurants.include? @restaurant
+    if current_user.created_restaurant?(@restaurant)
       @restaurant.destroy
       flash[:notice] = "Restaurant deleted successfully"
       redirect_to "/restaurants"

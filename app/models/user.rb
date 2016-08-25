@@ -23,4 +23,16 @@ class User < ApplicationRecord
       end
     end
   end
+
+  def has_reviewed?(restaurant)
+    p '****************'
+    p reviewed_restaurants.include? restaurant
+    p '****************'
+    reviewed_restaurants.include? restaurant
+  end
+
+  def created_restaurant?(restaurant)
+    restaurants.include? restaurant
+  end
+
 end

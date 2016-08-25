@@ -6,12 +6,17 @@ class ReviewsController < ApplicationController
 
   def create
     @restaurant = Restaurant.find(params[:restaurant_id])
-    @review = @restaurant.reviews.new(review_params)
-    @review.user = current_user
-    if @review.save
+    if current_user.has_reviewed?(@restaurant)
+      flash[:alert]= "You have already reviewed #{@restaurant.name}"
       redirect_to "/restaurants"
     else
-      render "new"
+      @review = @restaurant.reviews.new(review_params)
+      @review.user = current_user
+      if @review.save
+        redirect_to "/restaurants"
+      else
+        render "new"
+      end
     end
   end
 
