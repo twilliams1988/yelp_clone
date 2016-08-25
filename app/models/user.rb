@@ -25,9 +25,6 @@ class User < ApplicationRecord
   end
 
   def has_reviewed?(restaurant)
-    p '****************'
-    p reviewed_restaurants.include? restaurant
-    p '****************'
     reviewed_restaurants.include? restaurant
   end
 
