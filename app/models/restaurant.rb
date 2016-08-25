@@ -1,13 +1,8 @@
 class Restaurant < ApplicationRecord
   belongs_to :user
-  has_many :reviews, dependent: :destroy
+  has_many :reviews,
+    -> { extending WithUserAssociationExtension },
+    dependent: :destroy
 
   validates :name, length: { minimum: 3 }, uniqueness: true
-
-  def build_review(params, user)
-    @review = self.reviews.new(params)
-    @review.user = user
-
-    @review
-  end
 end
